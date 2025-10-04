@@ -6,19 +6,29 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
 import HorizontalScroll from "@/components/section/horizontalScroll";
 import Preloader from "@/components/Preloader";
+import FullScreenMenu from "@/components/FullScreenMenu";
+import MenuToggle from "@/components/MenuToggle";
 import { useState } from "react";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <>
       {/* Preloader */}
       <Preloader onLoadingComplete={handleLoadingComplete} />
+
+      {/* Full Screen Menu */}
+      <FullScreenMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       {/* Main Content */}
       <AnimatePresence>
@@ -58,6 +68,15 @@ export default function Home() {
             <Button className="bg-[#1d1d1d] text-white hover:bg-[#2d2d2d] rounded-full px-6">
               CONTACT US
             </Button>
+          </motion.div>
+          
+          {/* Menu Toggle Button - Always visible */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <MenuToggle isOpen={isMenuOpen} onClick={toggleMenu} />
           </motion.div>
         </nav>
       </header>
