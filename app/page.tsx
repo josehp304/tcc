@@ -2,13 +2,33 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
 import HorizontalScroll from "@/components/section/horizontalScroll";
+import Preloader from "@/components/Preloader";
+import { useState } from "react";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      {/* Preloader */}
+      <Preloader onLoadingComplete={handleLoadingComplete} />
+
+      {/* Main Content */}
+      <AnimatePresence>
+        {!isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-screen bg-white"
+          >
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -184,7 +204,7 @@ export default function Home() {
         </motion.div>
       </section>
       <HorizontalScroll/>
-      
+
       {/* About Section */}
       <section id="about" className="py-16 px-6 bg-[#1d1d1d] text-white">
         <div className="max-w-7xl mx-auto">
@@ -357,6 +377,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

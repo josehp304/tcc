@@ -129,6 +129,21 @@
   }
 }
 
+/* Custom utility classes */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+/* Smooth text rendering */
+.text-smooth {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Hide Next.js error overlay portal */
 nextjs-portal {
   display: none !important;
